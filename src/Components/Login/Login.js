@@ -97,13 +97,15 @@ export const Login = () => {
       console.log('Response Data:', data);
 
       if (response.ok && data.authenticated) {
-        navigate('/home'); // Redirect to the Home component route
+        // Store sessionId in localStorage after successful login
+        localStorage.setItem('sessionId', data.sessionId);
+        navigate('/home', { state: { userViews: data.userViews } }); // Redirect to home with userViews
       } else {
         alert('Wrong username or password'); // Show an alert for incorrect credentials
       }
     } catch (error) {
       console.error('Error:', error);
-      setResponseMessage('An error occurred during login.');
+      setResponseMessage('An error occurred during login.'); 
     }
   };
 
@@ -135,3 +137,6 @@ export const Login = () => {
     </section>
   );
 };
+
+
+export default Login;
